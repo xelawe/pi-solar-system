@@ -1,7 +1,7 @@
 import math
 #import micropython
 
-planets_a = micropython.const([
+planets_a = const([
     [bytes([
         47, 49, 110, 110, 110,
         47, 50, 73, 73, 73,
