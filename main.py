@@ -3,7 +3,7 @@
 import time
 import math
 import gc
-import machine
+#import machine
 #from micropython import const
 #import from PIL 
 import Image, ImageDraw
