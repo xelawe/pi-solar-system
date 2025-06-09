@@ -74,7 +74,7 @@ def main():
     #draw.clear()
     gc.collect()
 
-    HEIGHT = const(135)
+    HEIGHT = 135
 
     mi = -1
     pl = Pluto(display)
