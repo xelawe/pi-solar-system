@@ -71,7 +71,7 @@ def main():
     w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
    # display.set_pen(display.create_pen(0, 0, 0))
-    draw.clear()
+    #draw.clear()
     gc.collect()
 
     HEIGHT = const(135)
