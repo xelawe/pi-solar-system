@@ -1,24 +1,14 @@
-from picographics import PicoGraphics, DISPLAY_PICO_DISPLAY, PEN_RGB565
-from pimoroni import Button, RGBLED
+#from picographics import PicoGraphics, DISPLAY_PICO_DISPLAY, PEN_RGB565
+#from pimoroni import Button, RGBLED
 import time
 import math
 import gc
 import machine
-from micropython import const
+#from micropython import const
+import from PIL import Image, ImageDraw
 
-gc.enable()
-backlight = 0.7
-plusDays = 0
-change = 0
-
-display = PicoGraphics(display=DISPLAY_PICO_DISPLAY, rotate=0, pen_type=PEN_RGB565)
-button_a = Button(12)
-button_b = Button(13)
-button_x = Button(14)
-button_y = Button(15)
-led = RGBLED(6, 7, 8)
-led.set_rgb(0,0,0)
-
+im = Image.open("planets.pgm")
+draw = ImageDraw.Draw(im)
 
 
 def circle(xpos0, ypos0, rad):
@@ -28,14 +18,14 @@ def circle(xpos0, ypos0, rad):
     dy = 1
     err = dx - (rad << 1)
     while x >= y:
-        display.pixel(xpos0 + x, ypos0 + y)
-        display.pixel(xpos0 + y, ypos0 + x)
-        display.pixel(xpos0 - y, ypos0 + x)
-        display.pixel(xpos0 - x, ypos0 + y)
-        display.pixel(xpos0 - x, ypos0 - y)
-        display.pixel(xpos0 - y, ypos0 - x)
-        display.pixel(xpos0 + y, ypos0 - x)
-        display.pixel(xpos0 + x, ypos0 - y)
+        draw.point(xpos0 + x, ypos0 + y)
+        draw.point(xpos0 + y, ypos0 + x)
+        draw.point(xpos0 - y, ypos0 + x)
+        draw.point(xpos0 - x, ypos0 + y)
+        draw.point(xpos0 - x, ypos0 - y)
+        draw.point(xpos0 - y, ypos0 - x)
+        draw.point(xpos0 + y, ypos0 - x)
+        draw.point(xpos0 + x, ypos0 - y)
         if err <= 0:
             y += 1
             err += dy
@@ -44,35 +34,6 @@ def circle(xpos0, ypos0, rad):
             x -= 1
             dx += 2
             err += dx - (rad << 1)
-
-
-def check_for_buttons():
-    global backlight
-    global plusDays
-    global change
-    if button_x.is_pressed:
-        backlight += 0.05
-        if backlight > 1:
-            backlight = 1
-        display.set_backlight(backlight)
-    elif button_y.is_pressed:
-        backlight -= 0.05
-        if backlight < 0:
-            backlight = 0
-        display.set_backlight(backlight)
-    if button_a.is_pressed and button_b.is_pressed:
-        plusDays = 0
-        change = 2
-        time.sleep(0.2)
-    elif button_a.is_pressed:
-        plusDays += 86400
-        change = 3
-        time.sleep(0.05)
-    elif button_b.is_pressed:
-        plusDays -= 86400
-        change = 3
-        time.sleep(0.05)
-
 
 def set_internal_time(utc_time):
     rtc_base_mem = const(0x4005c000)
