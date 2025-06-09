@@ -144,10 +144,10 @@ def main():
 
 
 def set_time():
-    try:
-        import wifi_config
-        set_time_ntp(wifi_config)
-    except ImportError:
+#    try:
+    import wifi_config
+    set_time_ntp(wifi_config)
+#    except ImportError:
 #        import ds3231
 #        ds = ds3231.ds3231()
 #        set_internal_time(ds.read_time())
