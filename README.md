@@ -1,3 +1,8 @@
+# Pi solar System
+
+Fork from dr-mod/pico-solar-system and adapted for raspberry pi to create pictures instead of display output.
+
+original README:
 # Pico Solar System
 
 A miniature device depicting the relative position of the planets in Solar System.
