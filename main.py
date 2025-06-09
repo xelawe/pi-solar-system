@@ -12,6 +12,7 @@ im = Image.new(mode="RGB", size=(320, 200))
 
 draw = ImageDraw.Draw(im)
 
+plusDays = 0
 
 def circle(xpos0, ypos0, rad):
     color = (40, 40, 40);
