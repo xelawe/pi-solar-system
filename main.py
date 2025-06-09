@@ -6,7 +6,7 @@ import gc
 #import machine
 #from micropython import const
 #import from PIL 
-import Image, ImageDraw
+from PIL import Image, ImageDraw
 
 im = Image.open("planets.pgm")
 draw = ImageDraw.Draw(im)
