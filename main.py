@@ -8,7 +8,7 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw
 
-im = Image.new(mode="RGB", size=(200, 200))
+im = Image.new(mode="RGB", size=(320, 200))
 
 draw = ImageDraw.Draw(im)
 
@@ -37,14 +37,6 @@ def circle(xpos0, ypos0, rad):
             dx += 2
             err += dx - (rad << 1)
 
-def set_internal_time(utc_time):
-    rtc_base_mem = const(0x4005c000)
-    atomic_bitmask_set = const(0x2000)
-    (year, month, day, hour, minute, second, wday, yday) = time.localtime(utc_time)
-    machine.mem32[rtc_base_mem + 4] = (year << 12) | (month << 8) | day
-    machine.mem32[rtc_base_mem + 8] = ((hour << 16) | (minute << 8) | second) | (((wday + 1) % 7) << 24)
-    machine.mem32[rtc_base_mem + atomic_bitmask_set + 0xc] = 0x10
-
 
 def main():
     global change
@@ -56,8 +48,9 @@ def main():
         PL_CENTER = (68, int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
         # t = time.ticks_ms()
-        display.set_pen(display.create_pen(255, 255, 0))
-        display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
+        # display.set_pen(display.create_pen(255, 255, 0))
+        # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
+        draw.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4, fill=(255, 255, 0), width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
             display.set_pen(display.create_pen(40, 40, 40))
@@ -77,9 +70,7 @@ def main():
     w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     display.set_pen(display.create_pen(0, 0, 0))
-    display.clear()
-    display.update()
-    display.set_backlight(0.7)
+    draw.clear()
     gc.collect()
 
     HEIGHT = const(135)
