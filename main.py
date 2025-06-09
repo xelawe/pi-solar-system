@@ -5,7 +5,8 @@ import math
 import gc
 import machine
 #from micropython import const
-import from PIL import Image, ImageDraw
+#import from PIL 
+import Image, ImageDraw
 
 im = Image.open("planets.pgm")
 draw = ImageDraw.Draw(im)
