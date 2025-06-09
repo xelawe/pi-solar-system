@@ -1,11 +1,11 @@
 from random import getrandbits, uniform
 import math
-from micropython import const
+#from micropython import const
 
 
 class Pluto:
-    MAX_TIME = const(2000)
-    R = const(3)
+    MAX_TIME = 2000
+    R = 3
     BOUNCE = 0.98
 
     def __init__(self, display):
