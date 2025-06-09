@@ -14,20 +14,21 @@ draw = ImageDraw.Draw(im)
 
 
 def circle(xpos0, ypos0, rad):
+    color = (40, 40, 40);
     x = rad - 1
     y = 0
     dx = 1
     dy = 1
     err = dx - (rad << 1)
     while x >= y:
-        draw.point(xpos0 + x, ypos0 + y)
-        draw.point(xpos0 + y, ypos0 + x)
-        draw.point(xpos0 - y, ypos0 + x)
-        draw.point(xpos0 - x, ypos0 + y)
-        draw.point(xpos0 - x, ypos0 - y)
-        draw.point(xpos0 - y, ypos0 - x)
-        draw.point(xpos0 + y, ypos0 - x)
-        draw.point(xpos0 + x, ypos0 - y)
+        draw.point((xpos0 + x, ypos0 + y), fill=color)
+        draw.point((xpos0 + y, ypos0 + x), fill=color)
+        draw.point((xpos0 - y, ypos0 + x), fill=color)
+        draw.point((xpos0 - x, ypos0 + y), fill=color)
+        draw.point((xpos0 - x, ypos0 - y), fill=color)
+        draw.point((xpos0 - y, ypos0 - x), fill=color)
+        draw.point((xpos0 + y, ypos0 - x), fill=color)
+        draw.point((xpos0 + x, ypos0 - y), fill=color)
         if err <= 0:
             y += 1
             err += dy
@@ -53,7 +54,7 @@ def main():
         draw.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4, fill=(255, 255, 0), width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
-            display.set_pen(display.create_pen(40, 40, 40))
+            #display.set_pen(display.create_pen(40, 40, 40))
             circle(PL_CENTER[0], PL_CENTER[1], r)
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
@@ -62,14 +63,14 @@ def main():
                 x = planets.planets_a[i][0][ar] - 50 + coordinates[0]
                 y = planets.planets_a[i][0][ar + 1] - 50 + coordinates[1]
                 if x >= 0 and y >= 0:
-                    display.set_pen(display.create_pen(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3],
-                                    planets.planets_a[i][0][ar + 4]))
-                    display.pixel(int(x), int(y))
+    #                display.set_pen(display.create_pen(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3],
+    #                                planets.planets_a[i][0][ar + 4]))
+    #                display.pixel(int(x), int(y))
         # print("draw = " + str(time.ticks_diff(t, time.ticks_ms())))
 
     w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    display.set_pen(display.create_pen(0, 0, 0))
+   # display.set_pen(display.create_pen(0, 0, 0))
     draw.clear()
     gc.collect()
 
@@ -99,8 +100,8 @@ def main():
 
         if change > 0:
             if change == 1:
-                display.set_pen(display.create_pen(0, 0, 0))
-                display.clear()
+        #        display.set_pen(display.create_pen(0, 0, 0))
+        #        display.clear()
                 draw_planets(HEIGHT, ti)
                 if plusDays > 0:
                     led.set_rgb(0, 50, 0)
@@ -112,10 +113,10 @@ def main():
             else:
                 change -= 1
 
-        display.set_pen(display.create_pen(0, 0, 0))
-        display.rectangle(140, 0, 100, HEIGHT)
-        display.rectangle(130, 0, 110, 35)
-        display.rectangle(130, 93, 110, HEIGHT - 93)
+       # display.set_pen(display.create_pen(0, 0, 0))
+       # display.rectangle(140, 0, 100, HEIGHT)
+       # display.rectangle(130, 0, 110, 35)
+       # display.rectangle(130, 93, 110, HEIGHT - 93)
 
         if mi != ti[4]:
             mi = ti[4]
@@ -123,14 +124,14 @@ def main():
         pl.step(ti[5], ticks_dif)
         pl.draw()
 
-        display.set_pen(display.create_pen(244, 170, 30))
-        display.text("%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]), 132, 7, 70, 2)
-        display.set_pen(display.create_pen(65, 129, 50))
-        display.text(w[ti[6]], 135, 93, 99, 2)
-        display.set_pen(display.create_pen(130, 255, 100))
-        display.text("%02d:%02d" % (ti[3], ti[4]), 132, 105, 99, 4)
-        display.update()
-        check_for_buttons()
+   #     display.set_pen(display.create_pen(244, 170, 30))
+   #     display.text("%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]), 132, 7, 70, 2)
+   #     display.set_pen(display.create_pen(65, 129, 50))
+   #     display.text(w[ti[6]], 135, 93, 99, 2)
+   #     display.set_pen(display.create_pen(130, 255, 100))
+   #     display.text("%02d:%02d" % (ti[3], ti[4]), 132, 105, 99, 4)
+   #     display.update()
+   #     check_for_buttons()
         time.sleep(0.01)
 
 
