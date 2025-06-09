@@ -50,7 +50,7 @@ def main():
     global change
     import planets
     from pluto import Pluto
-    set_time()
+    #set_time()
 
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (68, int(HEIGHT / 2))
@@ -143,38 +143,14 @@ def main():
         time.sleep(0.01)
 
 
-def set_time():
+#def set_time():
 #    try:
-    import wifi_config
-    set_time_ntp(wifi_config)
+#    import wifi_config
+#    set_time_ntp(wifi_config)
 #    except ImportError:
 #        import ds3231
 #        ds = ds3231.ds3231()
 #        set_internal_time(ds.read_time())
-
-
-def set_time_ntp(wifi_config):
-    import network
-    wlan = network.WLAN(network.STA_IF)
-    wlan.active(True)
-    print("Connecting to:", wifi_config.ssid)
-    wlan.connect(wifi_config.ssid, wifi_config.key)
-    while not wlan.isconnected() and wlan.status() >= 0:
-        print("Waiting for connection...")
-        time.sleep(5)
-    print(wlan.ifconfig())
-    print("Pico clock:", time.localtime())
-    print("Setting time via ntp...")
-    import ntptime
-    ntpsuccess = False
-    while not ntpsuccess:
-        try:
-            ntptime.settime()
-            print("Time set: ", time.localtime())
-            ntpsuccess = True
-        except:
-            print("NTP failure. Retrying.")
-            time.sleep(5)
 
 
 time.sleep(0.5)
