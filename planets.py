@@ -1,5 +1,5 @@
 import math
-import micropython
+#import micropython
 
 planets_a = micropython.const([
     [bytes([
