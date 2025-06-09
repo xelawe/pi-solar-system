@@ -77,7 +77,7 @@ def main():
     HEIGHT = 135
 
     mi = -1
-    pl = Pluto(display)
+    pl = Pluto(draw)
 
     seconds_absolute = time.time()
     ti = time.localtime(seconds_absolute + plusDays)
