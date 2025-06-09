@@ -8,7 +8,8 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw
 
-im = Image.open("planets.pgm")
+im = Image.new(mode="RGB", size=(200, 200))
+
 draw = ImageDraw.Draw(im)
 
 
