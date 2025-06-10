@@ -60,6 +60,8 @@ def main():
     
     draw_planets(HEIGHT, ti)
 
+    pl.draw()
+
     draw_date_time(ti)
 
     im.save("planets.png")
