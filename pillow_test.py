@@ -55,7 +55,7 @@ def main():
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
         # draw sun in Center
         sun_radius = 4
-        draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_raduis,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
+        draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
             #display.set_pen(display.create_pen(40, 40, 40))
