@@ -53,9 +53,9 @@ def main():
         # t = time.ticks_ms()
         # display.set_pen(display.create_pen(255, 255, 0))
         # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
-        draw.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4, fill=(255, 255, 0), width=1)
+        draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
 
-
+    draw.circle((160,100), 4, fill=(255, 255, 0), width=1)
     im.save("test.png")
 
 
