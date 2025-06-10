@@ -17,7 +17,7 @@ draw = ImageDraw.Draw(im)
 
 plusDays = 0
 
-def main():
+def main(datetime=1):
     global change
     import planets
     from pluto import Pluto
@@ -59,11 +59,12 @@ def main():
     
     draw_planets(HEIGHT, ti)
 
-    pl = Pluto(draw)
-    pl.step(ti[5], 0)
-    pl.draw()
+    if (datetime == 1)
+        pl = Pluto(draw)
+        pl.step(ti[5], 0)
+        pl.draw()
 
-    draw_date_time(ti)
+        draw_date_time(ti)
 
     im.save("pisolar.png")
 
