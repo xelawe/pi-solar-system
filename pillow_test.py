@@ -71,8 +71,6 @@ def main():
         w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-        seconds_absolute = time.time()
-        ti = time.localtime(seconds_absolute + plusDays)
         da = ti[2]
     
         #font = ImageFont.truetype("sans-serif.ttf", 16)
@@ -80,6 +78,10 @@ def main():
         draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
         draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
         draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
+
+    
+    seconds_absolute = time.time()
+    ti = time.localtime(seconds_absolute + plusDays)
     
     draw_planets(HEIGHT, ti)
 
