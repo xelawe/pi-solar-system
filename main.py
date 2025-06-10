@@ -6,144 +6,66 @@ import gc
 #import machine
 #from micropython import const
 #import from PIL 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
-im = Image.new(mode="RGB", size=(320, 200), color=(255,255,255))
+WIDTH  = 240
+HEIGHT = 134
+img_background_col = (255,255,255) #(0,0,0)
+im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=img_background_col)
 
 draw = ImageDraw.Draw(im)
 
 plusDays = 0
 
-def circle(xpos0, ypos0, rad):
-    color = (40, 40, 40);
-    x = rad - 1
-    y = 0
-    dx = 1
-    dy = 1
-    err = dx - (rad << 1)
-    while x >= y:
-        draw.point((xpos0 + x, ypos0 + y), fill=color)
-        draw.point((xpos0 + y, ypos0 + x), fill=color)
-        draw.point((xpos0 - y, ypos0 + x), fill=color)
-        draw.point((xpos0 - x, ypos0 + y), fill=color)
-        draw.point((xpos0 - x, ypos0 - y), fill=color)
-        draw.point((xpos0 - y, ypos0 - x), fill=color)
-        draw.point((xpos0 + y, ypos0 - x), fill=color)
-        draw.point((xpos0 + x, ypos0 - y), fill=color)
-        if err <= 0:
-            y += 1
-            err += dy
-            dy += 2
-        if err > 0:
-            x -= 1
-            dx += 2
-            err += dx - (rad << 1)
-
-
 def main():
     global change
     import planets
     from pluto import Pluto
-    #set_time()
 
     def draw_planets(HEIGHT, ti):
-        PL_CENTER = (68, int(HEIGHT / 2))
+        PL_CENTER = (int(HEIGHT / 2), int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
-        # t = time.ticks_ms()
-        # display.set_pen(display.create_pen(255, 255, 0))
-        # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
-        draw.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4, fill=(255, 255, 0), width=1)
+        # draw sun in Center
+        sun_radius = 4
+        draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
-            r = 8 * (i + 1) + 2
-            #display.set_pen(display.create_pen(40, 40, 40))
-            circle(PL_CENTER[0], PL_CENTER[1], r)
+            r = int((HEIGHT/2)/9) * (i + 1) + 2
+            draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=None, outline=(40, 40, 40),width=1)
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
             coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
             for ar in range(0, len(planets.planets_a[i][0]), 5):
                 x = planets.planets_a[i][0][ar] - 50 + coordinates[0]
                 y = planets.planets_a[i][0][ar + 1] - 50 + coordinates[1]
-                #if x >= 0 and y >= 0:
-                    #display.set_pen(display.create_pen(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3],
-                    #                planets.planets_a[i][0][ar + 4]))
-                    #display.pixel(int(x), int(y))
-        # print("draw = " + str(time.ticks_diff(t, time.ticks_ms())))
+                if x >= 0 and y >= 0:
+                    draw.point((int(x), int(y)), fill=(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4]))
 
-    w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-   # display.set_pen(display.create_pen(0, 0, 0))
-    #draw.clear()
-    gc.collect()
+    def draw_date_time(ti):
+        w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-    HEIGHT = 135
+        da = ti[2]
+    
+        #font = ImageFont.truetype("sans-serif.ttf", 16)
+        font = ImageFont.load_default()
+        draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
+        draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
+        draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
 
     mi = -1
-    pl = Pluto(draw)
-
+    
     seconds_absolute = time.time()
     ti = time.localtime(seconds_absolute + plusDays)
-    da = ti[2]
-
+    
     draw_planets(HEIGHT, ti)
-    start_int = time.ticks_ms()
-    while True:
-        ticks_dif = time.ticks_diff(time.ticks_ms(), start_int)
-        if ticks_dif >= 1000 or time.time() != seconds_absolute:
-            seconds_absolute = time.time()
-            ti = time.localtime(seconds_absolute + plusDays)
-            start_int = time.ticks_ms()
-            ticks_dif = 0
-        if change > 0:
-            ti = time.localtime(seconds_absolute + plusDays)
-        if da != ti[2]:
-            da = ti[2]
-            change = 3
 
-        if change > 0:
-            if change == 1:
-        #        display.set_pen(display.create_pen(0, 0, 0))
-        #        display.clear()
-                draw_planets(HEIGHT, ti)
-                if plusDays > 0:
-                    led.set_rgb(0, 50, 0)
-                elif plusDays < 0:
-                    led.set_rgb(50, 0, 0)
-                else:
-                    led.set_rgb(0, 0, 0)
-                change = 0
-            else:
-                change -= 1
+    pl = Pluto(draw)
+    pl.step(ti[5], 0)
+    pl.draw()
 
-       # display.set_pen(display.create_pen(0, 0, 0))
-       # display.rectangle(140, 0, 100, HEIGHT)
-       # display.rectangle(130, 0, 110, 35)
-       # display.rectangle(130, 93, 110, HEIGHT - 93)
+    draw_date_time(ti)
 
-        if mi != ti[4]:
-            mi = ti[4]
-            pl.reset()
-        pl.step(ti[5], ticks_dif)
-        pl.draw()
-
-   #     display.set_pen(display.create_pen(244, 170, 30))
-   #     display.text("%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]), 132, 7, 70, 2)
-   #     display.set_pen(display.create_pen(65, 129, 50))
-   #     display.text(w[ti[6]], 135, 93, 99, 2)
-   #     display.set_pen(display.create_pen(130, 255, 100))
-   #     display.text("%02d:%02d" % (ti[3], ti[4]), 132, 105, 99, 4)
-   #     display.update()
-   #     check_for_buttons()
-        time.sleep(0.01)
-
-
-#def set_time():
-#    try:
-#    import wifi_config
-#    set_time_ntp(wifi_config)
-#    except ImportError:
-#        import ds3231
-#        ds = ds3231.ds3231()
-#        set_internal_time(ds.read_time())
+    im.save("planets.png")
 
 
 time.sleep(0.5)
