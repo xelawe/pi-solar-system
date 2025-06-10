@@ -8,7 +8,8 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw
 
-im = Image.new(mode="RGB", size=(320, 200), color=(255,255,255))
+HEIGHT = 200
+im = Image.new(mode="RGB", size=(320, HEIGHT), color=(255,255,255))
 
 draw = ImageDraw.Draw(im)
 
@@ -64,7 +65,7 @@ def main():
 
     #draw.ellipse((158,98,162,102), fill=(255, 255, 0), outline="black",width=1)
 
-    draw_planets(100, ti)
+    draw_planets(HEIGHT, ti)
 
 
     
