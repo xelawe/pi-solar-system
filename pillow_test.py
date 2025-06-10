@@ -16,39 +16,11 @@ im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=(0,0,0))
 draw = ImageDraw.Draw(im)
 
 plusDays = 0
-def circle(xpos0, ypos0, rad):
-    color = (40, 40, 40);
-    x = rad - 1
-    y = 0
-    dx = 1
-    dy = 1
-    err = dx - (rad << 1)
-    while x >= y:
-        draw.point((xpos0 + x, ypos0 + y), fill=color)
-        draw.point((xpos0 + y, ypos0 + x), fill=color)
-        draw.point((xpos0 - y, ypos0 + x), fill=color)
-        draw.point((xpos0 - x, ypos0 + y), fill=color)
-        draw.point((xpos0 - x, ypos0 - y), fill=color)
-        draw.point((xpos0 - y, ypos0 - x), fill=color)
-        draw.point((xpos0 + y, ypos0 - x), fill=color)
-        draw.point((xpos0 + x, ypos0 - y), fill=color)
-        if err <= 0:
-            y += 1
-            err += dy
-            dy += 2
-        if err > 0:
-            x -= 1
-            dx += 2
-            err += dx - (rad << 1)
-
 
 def main():
     global change
     import planets
     from pluto import Pluto
-    #set_time()
-
-
 
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (68, int(HEIGHT / 2))
@@ -58,8 +30,6 @@ def main():
         draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
-            #display.set_pen(display.create_pen(40, 40, 40))
-            #circle(PL_CENTER[0], PL_CENTER[1], r)
             draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=None, outline=(40, 40, 40),width=1)
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
@@ -82,6 +52,8 @@ def main():
         draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
         draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
 
+    mi = -1
+    pl = Pluto(draw)
     
     seconds_absolute = time.time()
     ti = time.localtime(seconds_absolute + plusDays)
