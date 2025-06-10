@@ -23,7 +23,7 @@ def main():
     from pluto import Pluto
 
     def draw_planets(HEIGHT, ti):
-        PL_CENTER = (int(WIDTH / 2), int(HEIGHT / 2))
+        PL_CENTER = (int(HEIGHT / 2), int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
         # draw sun in Center
         sun_radius = 4
