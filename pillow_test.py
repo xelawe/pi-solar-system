@@ -50,9 +50,6 @@ def main():
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (68, int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
-        t = time.ticks_ms()
-        # display.set_pen(display.create_pen(255, 255, 0))
-        # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
         draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
@@ -64,7 +61,7 @@ def main():
     ti = time.localtime(seconds_absolute + plusDays)
     da = ti[2]
 
-    draw.ellipse((158,98,162,102), fill=(255, 255, 0), outline="black",width=1)
+    #draw.ellipse((158,98,162,102), fill=(255, 255, 0), outline="black",width=1)
 
     draw_planets(100, ti)
 
