@@ -8,8 +8,8 @@ class Pluto:
     R = 3
     BOUNCE = 0.98
 
-    def __init__(self, display):
-        self.display = display
+    def __init__(self, draw):
+        self.draw = draw
         self.x = 240.0
         self.y = 0
         self.vel_x = -3.0
@@ -37,8 +37,10 @@ class Pluto:
             self.x = self.x_min
 
     def draw(self):
-        self.display.set_pen(self.display.create_pen(156, 166, 183))
-        self.display.circle(int(self.x), int(self.y), Pluto.R)
+        #self.display.set_pen(self.display.create_pen(156, 166, 183))
+        #self.display.circle(int(self.x), int(self.y), Pluto.R)
+        self.draw.ellipse((int(self.x)-Pluto.R, int(self.y)-Pluto.R,int(self.x)+Pluto.R, int(self.y)+Pluto.R), fill=(156, 166, 183), outline=(255, 255, 0),width=1)
+
 
     def reset(self):
         vel = uniform(3, 7)
