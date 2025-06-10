@@ -2,7 +2,7 @@
 
 Fork from dr-mod/pico-solar-system and adapted for raspberry pi to create pictures instead of display output.
 
-![picture](docs/plantes.png)
+![picture](docs/planets.png)
 
 original README:
 # Pico Solar System
