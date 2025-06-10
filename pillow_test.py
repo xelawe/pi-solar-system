@@ -55,7 +55,20 @@ def main():
         draw.ellipse((int(PL_CENTER[0])-2, int(PL_CENTER[1])-2,int(PL_CENTER[0])+2, int(PL_CENTER[1])+2), fill=(255, 255, 0), outline="black",width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
+            #display.set_pen(display.create_pen(40, 40, 40))
+            circle(PL_CENTER[0], PL_CENTER[1], r)
+            feta = math.atan2(el[0], el[1])
+            coordinates = (r * math.sin(feta), r * math.cos(feta))
+            coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
+            for ar in range(0, len(planets.planets_a[i][0]), 5):
+                x = planets.planets_a[i][0][ar] - 50 + coordinates[0]
+                y = planets.planets_a[i][0][ar + 1] - 50 + coordinates[1]
+                if x >= 0 and y >= 0:
+                    #display.set_pen(display.create_pen(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3],
+                    #                planets.planets_a[i][0][ar + 4]))
+                    display.pixel(int(x), int(y))
 
+    
     w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
