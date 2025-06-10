@@ -39,7 +39,7 @@ class Pluto:
     def draw(self):
         #self.display.set_pen(self.display.create_pen(156, 166, 183))
         #self.display.circle(int(self.x), int(self.y), Pluto.R)
-        self.imgdraw.ellipse((int(self.x)-Pluto.R, int(self.y)-Pluto.R,int(self.x)+Pluto.R, int(self.y)+Pluto.R), fill=(156, 166, 183), outline=(255, 255, 0),width=1)
+        self.imgdraw.ellipse((int(self.x)-Pluto.R, int(self.y)-Pluto.R,int(self.x)+Pluto.R, int(self.y)+Pluto.R), fill=(156, 166, 183), outline=(156, 166, 183),width=1)
 
 
     def reset(self):
