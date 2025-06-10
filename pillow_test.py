@@ -67,26 +67,24 @@ def main():
                 if x >= 0 and y >= 0:
                     draw.point((int(x), int(y)), fill=(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4]))
 
+    def draw_date_time(ti)
+        w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+        seconds_absolute = time.time()
+        ti = time.localtime(seconds_absolute + plusDays)
+        da = ti[2]
     
-    w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-    seconds_absolute = time.time()
-    ti = time.localtime(seconds_absolute + plusDays)
-    da = ti[2]
-
+        #font = ImageFont.truetype("sans-serif.ttf", 16)
+        font = ImageFont.load_default()
+        draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
+        draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
+        draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
+    
     draw_planets(HEIGHT, ti)
 
-    #font = ImageFont.truetype("sans-serif.ttf", 16)
-    font = ImageFont.load_default()
-    draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
-    draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
-    draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
-    
+    draw_date_time(ti)
 
-    #display.set_pen(display.create_pen(130, 255, 100))
-    #display.text("%02d:%02d" % (ti[3], ti[4]), 132, 105, 99, 4)
-    
     im.save("planets.png")
 
 
