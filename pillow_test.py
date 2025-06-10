@@ -44,7 +44,20 @@ def main():
     import planets
     from pluto import Pluto
     #set_time()
+
+
+
+    def draw_planets(HEIGHT, ti):
+        PL_CENTER = (68, int(HEIGHT / 2))
+        planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
+        # t = time.ticks_ms()
+        # display.set_pen(display.create_pen(255, 255, 0))
+        # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
+        draw.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4, fill=(255, 255, 0), width=1)
+
+
     im.save("test.png")
+
 
 time.sleep(0.5)
 main()
