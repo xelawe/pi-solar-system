@@ -6,7 +6,7 @@ import gc
 #import machine
 #from micropython import const
 #import from PIL 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 HEIGHT = 200
 im = Image.new(mode="RGB", size=(320, HEIGHT), color=(255,255,255))
