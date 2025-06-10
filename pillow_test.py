@@ -10,7 +10,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 HEIGHT = 134
 WIDTH  = 240
-im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=(255,255,255))
+#im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=(255,255,255))
+im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=(0,0,0))
 
 draw = ImageDraw.Draw(im)
 
