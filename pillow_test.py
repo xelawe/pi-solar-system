@@ -50,7 +50,7 @@ def main():
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (68, int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
-        draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
+        #draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
         draw.ellipse((int(PL_CENTER[0])-2, int(PL_CENTER[1])-2,int(PL_CENTER[0])+2, int(PL_CENTER[1])+2), fill=(255, 255, 0), outline="black",width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
