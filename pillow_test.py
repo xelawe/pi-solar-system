@@ -77,7 +77,8 @@ def main():
     draw_planets(HEIGHT, ti)
 
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype("sans-serif.ttf", 16)
+    #font = ImageFont.truetype("sans-serif.ttf", 16)
+    font = ImageFont.load_default()
     # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),(244, 170, 30),font=font)
     
