@@ -29,7 +29,7 @@ def main():
         sun_radius = 4
         draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
-            r = 8 * (i + 1) + 2
+            r = int((HEIGHT/2)/8) * (i + 1) + 2
             draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=None, outline=(40, 40, 40),width=1)
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
