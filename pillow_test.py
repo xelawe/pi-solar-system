@@ -55,7 +55,7 @@ def main():
         # display.circle(int(PL_CENTER[0]), int(PL_CENTER[1]), 4)
         draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
 
-    draw.circle((160,100), 4, fill=(255, 255, 0), width=1)
+    draw.ellipse((150,150,160,160), fill=(255, 255, 0), outline="black",width=1)
     im.save("test.png")
 
 
