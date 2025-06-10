@@ -67,7 +67,7 @@ def main():
                 if x >= 0 and y >= 0:
                     draw.point((int(x), int(y)), fill=(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4]))
 
-    def draw_date_time(ti)
+    def draw_date_time(ti):
         w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
