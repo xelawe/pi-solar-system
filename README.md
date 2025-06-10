@@ -1,6 +1,6 @@
 # Pi solar System
 
-Fork from dr-mod/pico-solar-system and adapted for raspberry pi to create pictures instead of display output.
+Fork from [pico-solar](https://github.com/dr-mod/pico-solar-system) and adapted for raspberry pi to create a picture instead of display output.
 
 ![picture](docs/pisolar.png)
 
