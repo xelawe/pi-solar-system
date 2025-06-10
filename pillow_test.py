@@ -60,7 +60,7 @@ def main():
             r = 8 * (i + 1) + 2
             #display.set_pen(display.create_pen(40, 40, 40))
             #circle(PL_CENTER[0], PL_CENTER[1], r)
-            draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=NONE, outline=(40, 40, 40),width=1)
+            draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=None, outline=(40, 40, 40),width=1)
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
             coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
