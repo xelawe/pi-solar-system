@@ -63,10 +63,11 @@ def main():
             for ar in range(0, len(planets.planets_a[i][0]), 5):
                 x = planets.planets_a[i][0][ar] - 50 + coordinates[0]
                 y = planets.planets_a[i][0][ar + 1] - 50 + coordinates[1]
-                #if x >= 0 and y >= 0:
+                if x >= 0 and y >= 0:
                     #display.set_pen(display.create_pen(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3],
                     #                planets.planets_a[i][0][ar + 4]))
                     #display.pixel(int(x), int(y))
+                    draw.point((int(x), int(y), fill=(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4]))
 
     
     w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
