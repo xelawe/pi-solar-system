@@ -80,9 +80,9 @@ def main():
     font = ImageFont.load_default()
     draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
     draw.text(( 135, 93),w[ti[6]], fill=(65, 129, 50),font=font)
+    draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
     
-    #display.set_pen(display.create_pen(65, 129, 50))
-    #display.text(w[ti[6]], 135, 93, 99, 2)
+
     #display.set_pen(display.create_pen(130, 255, 100))
     #display.text("%02d:%02d" % (ti[3], ti[4]), 132, 105, 99, 4)
     
