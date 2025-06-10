@@ -8,8 +8,9 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw, ImageFont
 
-HEIGHT = 200
-im = Image.new(mode="RGB", size=(320, HEIGHT), color=(255,255,255))
+HEIGHT = 134
+WIDTH  = 240
+im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=(255,255,255))
 
 draw = ImageDraw.Draw(im)
 
@@ -51,8 +52,8 @@ def main():
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (68, int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
-        #draw.circle((int(PL_CENTER[0]), int(PL_CENTER[1])), 4, fill=(255, 255, 0), width=1)
-        draw.ellipse((int(PL_CENTER[0])-2, int(PL_CENTER[1])-2,int(PL_CENTER[0])+2, int(PL_CENTER[1])+2), fill=(255, 255, 0), outline="black",width=1)
+        # draw sun in Center
+        draw.ellipse((int(PL_CENTER[0])-2, int(PL_CENTER[1])-2,int(PL_CENTER[0])+2, int(PL_CENTER[1])+2), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
             r = 8 * (i + 1) + 2
             #display.set_pen(display.create_pen(40, 40, 40))
