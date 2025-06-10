@@ -39,7 +39,7 @@ def circle(xpos0, ypos0, rad):
             err += dx - (rad << 1)
 
 
-  def main():
+def main():
     global change
     import planets
     from pluto import Pluto
