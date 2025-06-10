@@ -65,7 +65,7 @@ def main():
 
     draw_date_time(ti)
 
-    im.save("planets.png")
+    im.save("pisolar.png")
 
 
 time.sleep(0.5)
