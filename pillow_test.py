@@ -8,7 +8,7 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw
 
-im = Image.new(mode="RGB", size=(320, 200))
+im = Image.new(mode="RGB", size=(320, 200), color=(255,255,255))
 
 draw = ImageDraw.Draw(im)
 
