@@ -44,7 +44,7 @@ def main():
     import planets
     from pluto import Pluto
     #set_time()
-
+    im.save("test.png")
 
 time.sleep(0.5)
 main()
