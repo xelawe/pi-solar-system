@@ -53,13 +53,14 @@ def main():
         draw.text(( 132, 105),"%02d:%02d" % (ti[3], ti[4]), fill=(130, 255, 100),font=font)
 
     mi = -1
-    pl = Pluto(draw)
     
     seconds_absolute = time.time()
     ti = time.localtime(seconds_absolute + plusDays)
     
     draw_planets(HEIGHT, ti)
 
+    pl = Pluto(draw)
+    pl.step(ti[5], 0)
     pl.draw()
 
     draw_date_time(ti)
