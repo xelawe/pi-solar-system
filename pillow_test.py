@@ -76,14 +76,11 @@ def main():
 
     draw_planets(HEIGHT, ti)
 
-    # font = ImageFont.truetype(<font-file>, <font-size>)
     #font = ImageFont.truetype("sans-serif.ttf", 16)
     font = ImageFont.load_default()
-    # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text(( 132, 7),"%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]),fill=(244, 170, 30),font=font)
+    draw.text(( 135, 93),w[ti[6]], ti[0]),fill=(65, 129, 50),font=font)
     
-    #display.set_pen(display.create_pen(244, 170, 30))
-    #display.text("%02d %s %d " % (ti[2], m[ti[1] - 1], ti[0]), 132, 7, 70, 2)
     #display.set_pen(display.create_pen(65, 129, 50))
     #display.text(w[ti[6]], 135, 93, 99, 2)
     #display.set_pen(display.create_pen(130, 255, 100))
