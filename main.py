@@ -9,7 +9,7 @@ import gc
 #import from PIL 
 from PIL import Image, ImageDraw, ImageFont
 
-WIDTH  = 240
+WIDTH  = 134  #240
 HEIGHT = 134
 img_background_col = (255,255,255) #(0,0,0)
 im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=img_background_col)
