@@ -3,6 +3,7 @@
 import time
 import math
 import gc
+# import argparse
 #import machine
 #from micropython import const
 #import from PIL 
@@ -21,6 +22,8 @@ def main(datetime=1):
     global change
     import planets
     from pluto import Pluto
+
+    # parser = argparse.ArgumentParser("pi solar system")
 
     def draw_planets(HEIGHT, ti):
         PL_CENTER = (int(HEIGHT / 2), int(HEIGHT / 2))
