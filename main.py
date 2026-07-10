@@ -3,14 +3,23 @@
 import time
 import math
 import gc
-# import argparse
+import argparse
 #import machine
 #from micropython import const
 #import from PIL 
 from PIL import Image, ImageDraw, ImageFont
 
-WIDTH  = 134  #240
-HEIGHT = 134
+# Breite/Höhe können als Kommandozeilen-Parameter übergeben werden,
+# z.B. python3 main.py --width 240 --height 135
+# Ohne Parameter greifen die Default-Werte (134x134).
+parser = argparse.ArgumentParser(description="Pi Solar System")
+parser.add_argument("--width", type=int, default=134, help="Bildbreite in Pixeln (Default: 134)")
+parser.add_argument("--height", type=int, default=134, help="Bildhöhe in Pixeln (Default: 134)")
+args, _ = parser.parse_known_args()
+ 
+WIDTH  = args.width
+HEIGHT = args.height
+
 img_background_col = (255,255,255) #(0,0,0)
 im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=img_background_col)
 
