@@ -16,10 +16,9 @@ parser = argparse.ArgumentParser(description="Pi Solar System")
 parser.add_argument("--width", type=int, default=134, help="Bildbreite in Pixeln (Default: 134)")
 parser.add_argument("--height", type=int, default=134, help="Bildhöhe in Pixeln (Default: 134)")
 args, _ = parser.parse_known_args()
- 
+
 WIDTH  = args.width
 HEIGHT = args.height
-
 img_background_col = (255,255,255) #(0,0,0)
 im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=img_background_col)
 
@@ -40,13 +39,10 @@ def main(datetime=1):
 
     def draw_planets(HEIGHT, ti):
         scale = HEIGHT / BASE_SIZE
-     
         PL_CENTER = (int(HEIGHT / 2), int(HEIGHT / 2))
         planets_dict = planets.coordinates(ti[0], ti[1], ti[2], ti[3], ti[4])
         # draw sun in Center
-        #sun_radius = 4
         sun_radius = max(1, round(4 * scale))
-     
         draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
             r = int((HEIGHT/2)/9) * (i + 1) + 2
@@ -54,23 +50,24 @@ def main(datetime=1):
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * math.cos(feta))
             coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
-
-            # Größe der einzelnen "Pixel", aus denen der Planet gezeichnet wird - skaliert mit,
-            # damit bei größeren Bildern keine Lücken zwischen den Punkten entstehen
-            point_size = max(1, round(scale))
-         
+            # Jedes Sprite-"Pixel" wird als Rechteck gezeichnet, dessen Kanten direkt aus
+            # den Grenzen der skalierten Rasterzelle berechnet werden. So schließen benachbarte
+            # Rechtecke immer lückenlos aneinander an, unabhängig davon, ob "scale" eine
+            # Ganzzahl ist oder nicht (verhindert das Gitter-/Karo-Muster bei krummen Skalierungen).
             for ar in range(0, len(planets.planets_a[i][0]), 5):
-                #x = planets.planets_a[i][0][ar] - 50 + coordinates[0]
-                #y = planets.planets_a[i][0][ar + 1] - 50 + coordinates[1]
-                x = (planets.planets_a[i][0][ar] - 50) * scale + coordinates[0]
-                y = (planets.planets_a[i][0][ar + 1] - 50) * scale + coordinates[1]             
-                if x >= 0 and y >= 0:
-                    #draw.point((int(x), int(y)), fill=(planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4]))
+                px = planets.planets_a[i][0][ar] - 50
+                py = planets.planets_a[i][0][ar + 1] - 50
+                gx0 = coordinates[0] + px * scale
+                gy0 = coordinates[1] + py * scale
+                if gx0 >= 0 and gy0 >= 0:
+                    gx1 = coordinates[0] + (px + 1) * scale
+                    gy1 = coordinates[1] + (py + 1) * scale
+                    x0 = int(math.floor(gx0))
+                    y0 = int(math.floor(gy0))
+                    x1 = max(x0, int(math.floor(gx1)) - 1)
+                    y1 = max(y0, int(math.floor(gy1)) - 1)
                     color = (planets.planets_a[i][0][ar + 2], planets.planets_a[i][0][ar + 3], planets.planets_a[i][0][ar + 4])
-                    if point_size <= 1:
-                        draw.point((int(x), int(y)), fill=color)
-                    else:
-                        draw.rectangle((int(x), int(y), int(x) + point_size - 1, int(y) + point_size - 1), fill=color)                 
+                    draw.rectangle((x0, y0, x1, y1), fill=color)
 
     def draw_date_time(ti):
         w = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
