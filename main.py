@@ -15,10 +15,21 @@ from PIL import Image, ImageDraw, ImageFont
 parser = argparse.ArgumentParser(description="Pi Solar System")
 parser.add_argument("--width", type=int, default=134, help="Bildbreite in Pixeln (Default: 134)")
 parser.add_argument("--height", type=int, default=134, help="Bildhöhe in Pixeln (Default: 134)")
+parser.add_argument("--orbit-style", choices=["circle", "ellipse"], default="circle",
+                     help="Darstellung der Planetenbahnen: 'circle' = Draufsicht (Standard), "
+                          "'ellipse' = perspektivische Darstellung wie beim Casio CGW-50 Cosmo Phase")
+parser.add_argument("--ellipse-ratio", type=float, default=0.45,
+                     help="Vertikaler Stauchungsfaktor der Ellipsen bei --orbit-style ellipse. "
+                          "1.0 = Kreis, kleinere Werte = flacher (Standard: 0.45)")
+parser.add_argument("--output", type=str, default="pisolar.png",
+                     help="Dateiname für das erzeugte PNG (Standard: pisolar.png)")
 args, _ = parser.parse_known_args()
 
 WIDTH  = args.width
 HEIGHT = args.height
+ORBIT_STYLE = args.orbit_style
+# Stauchungsfaktor auf einen sinnvollen Bereich begrenzen
+ELLIPSE_RATIO = min(1.0, max(0.1, args.ellipse_ratio))
 img_background_col = (255,255,255) #(0,0,0)
 im = Image.new(mode="RGB", size=(WIDTH, HEIGHT), color=img_background_col)
 
@@ -46,9 +57,13 @@ def main(datetime=1):
         draw.ellipse((int(PL_CENTER[0])-sun_radius, int(PL_CENTER[1])-sun_radius,int(PL_CENTER[0])+sun_radius, int(PL_CENTER[1])+sun_radius), fill=(255, 255, 0), outline=(255, 255, 0),width=1)
         for i, el in enumerate(planets_dict):
             r = int((HEIGHT/2)/9) * (i + 1) + 2
-            draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-r,int(PL_CENTER[0])+r, int(PL_CENTER[1])+r), fill=None, outline=(40, 40, 40),width=1)
+            # Vertikaler Stauchungsfaktor der Umlaufbahn: 1.0 = Kreis (Draufsicht),
+            # < 1.0 = flache Ellipse (perspektivische Darstellung wie beim Cosmo Phase)
+            ratio = ELLIPSE_RATIO if ORBIT_STYLE == "ellipse" else 1.0
+            rv = int(r * ratio)
+            draw.ellipse((int(PL_CENTER[0])-r, int(PL_CENTER[1])-rv,int(PL_CENTER[0])+r, int(PL_CENTER[1])+rv), fill=None, outline=(40, 40, 40),width=1)
             feta = math.atan2(el[0], el[1])
-            coordinates = (r * math.sin(feta), r * math.cos(feta))
+            coordinates = (r * math.sin(feta), r * ratio * math.cos(feta))
             coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
             # Jedes Sprite-"Pixel" wird als Rechteck gezeichnet, dessen Kanten direkt aus
             # den Grenzen der skalierten Rasterzelle berechnet werden. So schließen benachbarte
@@ -95,7 +110,7 @@ def main(datetime=1):
 
         draw_date_time(ti)
 
-    im.save("pisolar.png")
+    im.save(args.output)
 
 
 time.sleep(0.5)
