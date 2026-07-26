@@ -178,11 +178,11 @@ def main(datetime=1):
     draw_planets(HEIGHT, ti)
 
     if (datetime == 1):
-        pl = Pluto(draw)
-        pl.step(ti[5], 0)
-        pl.draw()
+        #pl = Pluto(draw)
+        #pl.step(ti[5], 0)
+        #pl.draw()
 
-        draw_date_time(ti)
+        #draw_date_time(ti)
 
     im.save(args.output)
 
