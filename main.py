@@ -21,6 +21,10 @@ parser.add_argument("--orbit-style", choices=["circle", "ellipse"], default="cir
 parser.add_argument("--ellipse-ratio", type=float, default=0.45,
                      help="Vertikaler Stauchungsfaktor der Ellipsen bei --orbit-style ellipse. "
                           "1.0 = Kreis, kleinere Werte = flacher (Standard: 0.45)")
+parser.add_argument("--planet-style", choices=["sprite", "circle"], default="sprite",
+                     help="Darstellung der Planeten: 'sprite' = Original-Pixelgrafik (Standard), "
+                          "'circle' = einfache gefüllte Kreise mit Kürzel - kontrastreicher und "
+                          "eignet sich besser für Graustufen-Darstellung")
 parser.add_argument("--output", type=str, default="pisolar.png",
                      help="Dateiname für das erzeugte PNG (Standard: pisolar.png)")
 args, _ = parser.parse_known_args()
@@ -28,8 +32,25 @@ args, _ = parser.parse_known_args()
 WIDTH  = args.width
 HEIGHT = args.height
 ORBIT_STYLE = args.orbit_style
+PLANET_STYLE = args.planet_style
 # Stauchungsfaktor auf einen sinnvollen Bereich begrenzen
 ELLIPSE_RATIO = min(1.0, max(0.1, args.ellipse_ratio))
+
+# Metadaten für den "circle"-Darstellungsmodus: Name, Kürzel (Merkur/Mars
+# fangen beide mit "M" an, daher zweistellige Kürzel statt nur Anfangsbuchstabe),
+# Farbe und Durchmesser (in Pixeln, bei ORBIT_SIZE=BASE_SIZE=134, skaliert mit
+# 'scale' wie die Sprite-Grafiken). Reihenfolge entspricht exakt der Reihenfolge
+# von planets.coordinates(): Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun.
+PLANET_INFO = [
+    {"name": "Merkur",  "label": "Me", "color": (169, 169, 169), "diameter": 5},
+    {"name": "Venus",   "label": "V",  "color": (218, 165, 105), "diameter": 7},
+    {"name": "Erde",    "label": "E",  "color": (70, 130, 180),  "diameter": 7},
+    {"name": "Mars",    "label": "Ma", "color": (193, 68, 14),   "diameter": 6},
+    {"name": "Jupiter", "label": "J",  "color": (216, 181, 137), "diameter": 11},
+    {"name": "Saturn",  "label": "S",  "color": (235, 214, 168), "diameter": 10},
+    {"name": "Uranus",  "label": "U",  "color": (172, 229, 238), "diameter": 8},
+    {"name": "Neptun",  "label": "N",  "color": (62, 84, 178),   "diameter": 8},
+]
 
 # Referenzgröße, für die die Planeten-Sprites in planets.py ursprünglich
 # entworfen wurden (bei ORBIT_SIZE=134 entspricht scale = 1.0, unverändertes Original-Verhalten)
@@ -80,6 +101,26 @@ def main(datetime=1):
             feta = math.atan2(el[0], el[1])
             coordinates = (r * math.sin(feta), r * ratio * math.cos(feta))
             coordinates = (coordinates[0] + PL_CENTER[0], HEIGHT - (coordinates[1] + PL_CENTER[1]))
+
+            if PLANET_STYLE == "circle":
+                info = PLANET_INFO[i]
+                d = max(2, round(info["diameter"] * scale))
+                cx, cy = coordinates
+                color = info["color"]
+                draw.ellipse((cx - d / 2, cy - d / 2, cx + d / 2, cy + d / 2),
+                             fill=color, outline=(0, 0, 0), width=1)
+                # Kontrastfarbe für das Kürzel anhand der wahrgenommenen Helligkeit
+                # der Planetenfarbe wählen - das funktioniert auch nach einer
+                # Umwandlung in Graustufen zuverlässig (schwarz auf hell, weiß auf dunkel).
+                luminance = 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]
+                text_color = (0, 0, 0) if luminance > 140 else (255, 255, 255)
+                font = ImageFont.load_default()
+                label = info["label"]
+                bbox = draw.textbbox((0, 0), label, font=font)
+                tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+                draw.text((cx - tw / 2 - bbox[0], cy - th / 2 - bbox[1]), label, fill=text_color, font=font)
+                continue
+
             # Jedes Sprite-"Pixel" wird als Rechteck gezeichnet, dessen Kanten direkt aus
             # den Grenzen der skalierten Rasterzelle berechnet werden. So schließen benachbarte
             # Rechtecke immer lückenlos aneinander an, unabhängig davon, ob "scale" eine
@@ -136,12 +177,12 @@ def main(datetime=1):
     
     draw_planets(HEIGHT, ti)
 
-    #if (datetime == 1):
-        #pl = Pluto(draw)
-        #pl.step(ti[5], 0)
-        #pl.draw()
+    if (datetime == 1):
+        pl = Pluto(draw)
+        pl.step(ti[5], 0)
+        pl.draw()
 
-        #draw_date_time(ti)
+        draw_date_time(ti)
 
     im.save(args.output)
 
